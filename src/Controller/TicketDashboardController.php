@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/dashboard/ticket')]
-class TicketController extends AbstractController
+class TicketDashboardController extends AbstractController
 {
     #[Route('/', name: 'rayenbou_dashboard_index', methods: ['GET', 'POST'])]
     public function index(TicketRepository $ticketRepository, EntityManagerInterface $entityManager, ApiUserRepository $apiUserRepository, Request $request, UserPasswordHasherInterface $up): Response
