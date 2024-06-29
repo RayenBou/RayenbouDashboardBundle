@@ -34,7 +34,7 @@ class SecurityCommand extends Command
         $newProvidersData = [
             'app_api_provider' => [
                 'entity' => [
-                    'class' => 'App\Entity\ApiUser',
+                    'class' => 'Rayenbou\DashboardBundle\Entity\ApiUser',
                     'property' => 'email'
                 ]
             ]
@@ -43,7 +43,7 @@ class SecurityCommand extends Command
         // Vérifie si la clé 'providers' existe et fusionne les données
         if (isset($config['security']['providers'])) {
             // Fusionne les nouvelles données avec les données existantes
-            $config['security']['providers'] = array_merge($config['security']['providers'], $newProvidersData);
+            $config['security']['providers'] = array_merge($newProvidersData, $config['security']['providers']);
         } else {
             // Si 'providers' n'existe pas, ajoute simplement les nouvelles données
             $config['security']['providers'] = $newProvidersData;
