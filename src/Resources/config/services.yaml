@@ -2,3 +2,18 @@ services:
   Rayenbou\DashboardBundle\Command\SecurityCommand:
     tags:
       - { name: "console.command" }
+  Rayenbou\DashboardBundle\Controller\TicketDashboardController:
+    tags:
+      - { name: "controller.service_arguments" }
+      - { name: "container.service_subscriber" }
+    arguments:
+
+    public: true
+    autowire: true
+    autoconfigure: true
+    # pour pouvoir injecter les service de l'abstract controller et utiliser ses methode
+    # il ne faut pas preciser d'argument a la methode setContainer pour laisser l'injection de dependance
+    # se faire automatiquement. il faut juste preciser un tableau vide
+    calls:
+      - method: setContainer
+        arguments: [""]
