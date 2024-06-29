@@ -2,10 +2,9 @@
 
 namespace Rayenbou\DashboardBundle\Repository;
 
-
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Rayenbou\DashboardBundle\Entity\Ticket;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Ticket>

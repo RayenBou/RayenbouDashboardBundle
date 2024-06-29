@@ -2,13 +2,12 @@
 
 namespace Rayenbou\DashboardBundle\Form;
 
-
-use Symfony\Component\Form\AbstractType;
 use Rayenbou\DashboardBundle\Entity\ApiUser;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class ApiUserType extends AbstractType
 {
@@ -17,12 +16,12 @@ class ApiUserType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'required' => true,
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
             ])
 
             ->add('password', TextType::class, [
                 'required' => true,
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
             ]);
     }
 

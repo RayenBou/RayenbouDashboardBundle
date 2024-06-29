@@ -2,20 +2,19 @@
 
 namespace Rayenbou\DashboardBundle\Controller;
 
-
 use Doctrine\ORM\EntityManagerInterface;
-use Rayenbou\DashboardBundle\Entity\Ticket;
 use Rayenbou\DashboardBundle\Entity\ApiUser;
-use Rayenbou\DashboardBundle\Form\TicketType;
-use Symfony\Component\HttpFoundation\Request;
-use Rayenbou\DashboardBundle\Form\ApiUserType;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Rayenbou\DashboardBundle\Entity\Ticket;
 use Rayenbou\DashboardBundle\Entity\TicketMessage;
-use Rayenbou\DashboardBundle\Repository\TicketRepository;
+use Rayenbou\DashboardBundle\Form\ApiUserType;
+use Rayenbou\DashboardBundle\Form\TicketType;
 use Rayenbou\DashboardBundle\Repository\ApiUserRepository;
+use Rayenbou\DashboardBundle\Repository\TicketRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/dashboard/ticket')]
 class TicketDashboardController extends AbstractController
@@ -23,7 +22,6 @@ class TicketDashboardController extends AbstractController
     #[Route('/', name: 'rayenbou_dashboard_index', methods: ['GET', 'POST'])]
     public function index(TicketRepository $ticketRepository, EntityManagerInterface $entityManager, ApiUserRepository $apiUserRepository, Request $request, UserPasswordHasherInterface $up): Response
     {
-
         $apiUser = new ApiUser();
         $apiUser->setPassword(bin2hex(random_bytes(32)));
         $form = $this->createForm(ApiUserType::class, $apiUser);
@@ -37,7 +35,6 @@ class TicketDashboardController extends AbstractController
             return $this->redirectToRoute('rayenbou_dashboard_index', [], Response::HTTP_SEE_OTHER);
         }
 
-
         return $this->render('@RayenbouDashboard/dashboard/index.html.twig', [
             'tickets' => $ticketRepository->findAll(),
             'form' => $form,
@@ -45,22 +42,23 @@ class TicketDashboardController extends AbstractController
         ]);
     }
 
-
     #[Route('/{id}', name: 'rayenbou_dashboard_show', methods: ['GET', 'POST'])]
     public function show(Ticket $ticket, Request $request, EntityManagerInterface $entityManager): Response
     {
         $message = new TicketMessage();
-        $form = $this->createForm(TicketType::class, $message, ["title" => false]);
+        $form = $this->createForm(TicketType::class, $message, ['title' => false]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ticket->addTicketMessage($message);
             $entityManager->persist($ticket);
             $entityManager->persist($message);
             $entityManager->flush();
+
             return $this->redirectToRoute('rayenbou_dashboard_show', [
-                'id' => $ticket->getId()
+                'id' => $ticket->getId(),
             ]);
         }
+
         return $this->render('@RayenbouDashboard/dashboard/show.html.twig', [
             'form' => $form,
             'ticket' => $ticket,
@@ -71,7 +69,7 @@ class TicketDashboardController extends AbstractController
     public function changeStatus(Ticket $ticket, EntityManagerInterface $entityManager): Response
     {
         $ticket->setStatus(!$ticket->getStatus());
-        if ($ticket->getStatus() === false) {
+        if (false === $ticket->getStatus()) {
             $ticket->setClosedAt(new \DateTimeImmutable());
         } else {
             $ticket->setClosedAt(null);
@@ -85,7 +83,7 @@ class TicketDashboardController extends AbstractController
     #[Route('/{id}', name: 'rayenbou_dashboard_delete', methods: ['POST'])]
     public function delete(Request $request, Ticket $ticket, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $ticket->getId(), (string) $request->getPayload()->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$ticket->getId(), (string) $request->getPayload()->get('_token'))) {
             $entityManager->remove($ticket);
             $entityManager->flush();
         }
@@ -96,7 +94,7 @@ class TicketDashboardController extends AbstractController
     #[Route('/user-api/{id}', name: 'rayenbou_dashboard_user_delete', methods: ['POST'])]
     public function deleteUser(Request $request, ApiUser $apiUser, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $apiUser->getId(), (string)$request->getPayload()->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apiUser->getId(), (string) $request->getPayload()->get('_token'))) {
             $entityManager->remove($apiUser);
             $entityManager->flush();
         }

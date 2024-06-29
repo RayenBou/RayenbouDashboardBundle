@@ -3,30 +3,38 @@
 namespace Rayenbou\DashboardBundle\State;
 
 use ApiPlatform\Metadata\Operation;
-
-use Doctrine\ORM\EntityManagerInterface;
 use ApiPlatform\State\ProcessorInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Rayenbou\DashboardBundle\Entity\Ticket;
 use Rayenbou\DashboardBundle\Entity\TicketMessage;
-use Rayenbou\DashboardBundle\Repository\TicketRepository;
 
 class PatchStateProcessor implements ProcessorInterface
 {
-
-    public function __construct(private EntityManagerInterface $entityManager, private TicketRepository $ticketRepository)
+    /**
+     * PatchStateProcessor constructor.
+     *
+     * @param EntityManagerInterface $entityManager the entity manager used to persist changes
+     */
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
+    /**
+     * Process the state of the given data during a PATCH operation.
+     *
+     * @param mixed                $data         the data being processed
+     * @param Operation            $operation    the operation being performed
+     * @param array<string,string> $uriVariables the variables extracted from the URI
+     * @param array                $context      the context of the operation
+     */
     public function process($data, Operation $operation, array $uriVariables = [], array $context = []): void
     {
         if ($data instanceof Ticket) {
-
-
             if ($data->getDescription()) {
                 $ticketMessage = new TicketMessage();
                 $ticketMessage->setDescription($data->getDescription());
                 $ticketMessage->setTicket($data);
-                $ticketMessage->setAuthor($data->getAuthor() ?? $data->getEmail());
+                $ticketMessage->setAuthor($data->getAuthor() ?? $data->getEmail() ?? 'Anonymous');
                 $this->entityManager->persist($ticketMessage);
             }
             $this->entityManager->persist($data);
