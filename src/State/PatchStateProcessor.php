@@ -3,11 +3,12 @@
 namespace Rayenbou\DashboardBundle\State;
 
 use ApiPlatform\Metadata\Operation;
-use App\Repository\TicketRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use ApiPlatform\State\ProcessorInterface;
 use Rayenbou\DashboardBundle\Entity\Ticket;
 use Rayenbou\DashboardBundle\Entity\TicketMessage;
+use Rayenbou\DashboardBundle\Repository\TicketRepository;
 
 class PatchStateProcessor implements ProcessorInterface
 {
