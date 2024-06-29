@@ -1,4 +1,16 @@
 services:
+  Rayenbou\DashboardBundle\Repository\ApiUserRepository:
+    autowire: true
+    tags: ["doctrine.repository_service"]
+
+  Rayenbou\DashboardBundle\Repository\TicketRepository:
+    autowire: true
+    tags: ["doctrine.repository_service"]
+
+  Rayenbou\DashboardBundle\Repository\TicketMessageRepository:
+    autowire: true
+    tags: ["doctrine.repository_service"]
+
   Rayenbou\DashboardBundle\Command\SecurityCommand:
     tags:
       - { name: "console.command" }
@@ -6,10 +18,6 @@ services:
     tags:
       - { name: "controller.service_arguments" }
       - { name: "container.service_subscriber" }
-    arguments:
-      - Rayenbou\DashboardBundle\Repository\TicketRepository: "@rayenbou_ticket.ticket_repository"
-      - Rayenbou\DashboardBundle\Entity\Ticket: "@rayenbou_ticket.ticket_entity"
-      - Rayenbou\DashboardBundle\Entity\TicketMessage: "@rayenbou_ticket.ticket_message_entity"
     public: true
     autowire: true
     autoconfigure: true

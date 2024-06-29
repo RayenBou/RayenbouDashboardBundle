@@ -44,7 +44,7 @@
 		</tbody>
 	</table>
 	{# <a href="{{ path('app_ticket_index') }}">back to list</a> #}
-	<form action="{{ path('app_ticket_change_status', {'id': ticket.getId()}) }}" method="post">
+	<form action="{{ path('rayenbou_dashboard_change_status', {'id': ticket.getId()}) }}" method="post">
 		<input type="hidden" name="_token" value="{{ csrf_token('change_status' ~ ticket.getId()) }}">
 		<button type="submit" class="main_button">{{ticket.status ? "ouvert": "fermé"}}</button>
 	</form>
