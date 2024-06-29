@@ -1,58 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends "@RayenbouDashboard/dashboard/base.html.twig" %}
 
 {% block title %}Ticket
 {% endblock %}
 
 {% block body %}
-	<h1>Ticket</h1>
+	<div class='container border  mt-4 p-4'>
+		<a href="{{ path('rayenbou_dashboard_index') }}" class='btn btn-dark mt-3'>Back to tickets</a>
+		<h2 class='mt-4 py-2'>{{ ticket.title }}</h2>
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ ticket.id }}</td>
-			</tr>
-			<tr>
-				<th>Title</th>
-				<td>{{ ticket.title }}</td>
-			</tr>
-			<tr>
-				<th>Description</th>
-				<td>{{ ticket.description }}</td>
-			</tr>
-			<tr>
-				<th>CreatedAt</th>
-				<td>{{ ticket.createdAt ? ticket.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-
-			<tr>
-				<th>Domain</th>
-				<td>{{ ticket.domain }}</td>
-			</tr>
-		</tbody>
-	</table>
-	<table>
-		<tbody>
-			{% for message in ticket.ticketMessages %}
-				<tr>
-					<td>{{ message.description }}</td>
-					<td>{{ message.createdAt|date('d/m/Y H:i:s') }}</td>
-					<td>{{ message.author }}</td>
-				</tr>
-
-			{% endfor %}
-		</tbody>
-	</table>
-	{# <a href="{{ path('app_ticket_index') }}">back to list</a> #}
-	<form action="{{ path('rayenbou_dashboard_change_status', {'id': ticket.getId()}) }}" method="post">
-		<input type="hidden" name="_token" value="{{ csrf_token('change_status' ~ ticket.getId()) }}">
-		<button type="submit" class="main_button">{{ticket.status ? "ouvert": "fermé"}}</button>
-	</form>
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	<button class='main_button'>envoyer</button>
-	{{ form_end(form) }}
-{# <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">edit</a> #}
-
-	{# {{ include('ticket/_delete_form.html.twig') }} #}
+		<div class="card my-3">
+			<div class='card-body'>
+				<p class="card-text">
+					<div class='lead'>ID:</div>
+					{{ ticket.id }}</p>
+				<p class="card-text">
+					<div class='lead'>Creation:</div>
+					{{ ticket.createdAt ? ticket.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+				<p class="card-text">
+					<div class='lead'>Domain:</div>
+					{{ ticket.domain }}</p>
+				<p class="card-text">
+					<div class='lead'>Token:</div>
+					{{ ticket.token }}</p>
+			</div>
+		</div>
+		{% for message in ticket.ticketMessages %}
+			<div class="d-flex {{ message.author == ticket.email ? 'justify-content-start' : 'justify-content-end' }} mb-2">
+				<div class="card" style="min-width: 300px;">
+					<div class="card-body">
+						<p class="card-text">{{ message.description }}</p>
+					</div>
+					<div class="card-footer d-flex justify-content-between">
+						<small>{{ message.author ? message.author : "You" }}</small>
+						<small>{{ message.createdAt|date('d/m/y  H:i') }}</small>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		{{ include('@RayenbouDashboard/dashboard/_form.html.twig') }}
+		<form action="{{ path('rayenbou_dashboard_change_status', {'id': ticket.getId()}) }}" method="post">
+			<input type="hidden" name="_token" value="{{ csrf_token('change_status' ~ ticket.getId()) }}">
+			<button type="submit" class="btn {{ ticket.status ? 'btn-success' : 'btn-danger' }}">{{ticket.status ? "open": "closed"}}</button>
+		</form>
+	</div>
 {% endblock %}
