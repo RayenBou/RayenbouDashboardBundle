@@ -1,0 +1,41 @@
+{
+  "name": "rayenbou/ticket-bundle",
+  "description": "A Symfony bundle to manage tickets from ticket bundle",
+  "license": "MIT",
+  "type": "symfony-bundle",
+  "authors": [
+    {
+      "name": "Rayen Boumaza",
+      "email": "boumaza.rayen@outlook.fr",
+      "role": "Author"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Rayenbou\\DashboardBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Rayenbou\\DashboardBundle\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=8.1",
+    "symfony/framework-bundle": ">=6.4",
+    "symfony/http-client": ">=6.4",
+    "lexik/jwt-authentication-bundle": "^3.0",
+    "api-platform/core": "^3.3"
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "1.x-dev"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
+}

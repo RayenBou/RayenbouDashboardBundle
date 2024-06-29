@@ -1,0 +1,4 @@
+services:
+  Rayenbou\DashboardBundle\Command\SecurityCommand:
+    tags:
+      - { name: "console.command" }
