@@ -9,8 +9,23 @@ services:
 
   Rayenbou\DashboardBundle\Repository\TicketMessageRepository:
     autowire: true
-    tags: ["doctrine.repository_service"]
 
+    tags: ["doctrine.repository_service"]
+  Rayenbou\DashboardBundle\State\TicketStateProcessor:
+    autowire: true
+    autoconfigure: true
+    public: true
+    tags: ["state.processor"]
+  Rayenbou\DashboardBundle\State\PatchStateProcessor:
+    autowire: true
+    autoconfigure: true
+    public: true
+    tags: ["state.processor"]
+  Rayenbou\DashboardBundle\State\TicketByTokenProvider:
+    autowire: true
+    autoconfigure: true
+    public: true
+    tags: ["state.provider"]
   Rayenbou\DashboardBundle\Command\SecurityCommand:
     tags:
       - { name: "console.command" }
