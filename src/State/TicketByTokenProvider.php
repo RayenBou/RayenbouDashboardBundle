@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Rayenbou\DashboardBundle\State;
 
 use ApiPlatform\Metadata\Operation;
@@ -32,8 +34,6 @@ class TicketByTokenProvider implements ProviderInterface
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $ticket = $this->ticketRepository->findOneBy(['token' => $uriVariables['token']]);
-
-        return $ticket;
+        return $this->ticketRepository->findOneBy(['token' => $uriVariables['token']]);
     }
 }

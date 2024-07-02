@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Rayenbou\DashboardBundle\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Rayenbou\DashboardBundle\Repository\TicketRepository;
-use Rayenbou\DashboardBundle\State\PatchStateProcessor;
-use Rayenbou\DashboardBundle\State\TicketByTokenProvider;
-use Rayenbou\DashboardBundle\State\TicketStateProcessor;
+use ApiPlatform\Metadata\Patch;
 use Symfony\Component\Uid\Uuid;
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Rayenbou\DashboardBundle\State\PatchStateProcessor;
+use Rayenbou\DashboardBundle\State\TicketStateProcessor;
+use Rayenbou\DashboardBundle\Repository\TicketRepository;
+use Rayenbou\DashboardBundle\State\TicketByTokenProvider;
 
 #[ApiResource]
 #[Patch(

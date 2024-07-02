@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Rayenbou\DashboardBundle\State;
 
 use ApiPlatform\Metadata\Operation;
@@ -31,10 +33,10 @@ class PatchStateProcessor implements ProcessorInterface
     {
         if ($data instanceof Ticket) {
             if ($data->getDescription()) {
-                $ticketMessage = new TicketMessage();
-                $ticketMessage->setDescription($data->getDescription());
-                $ticketMessage->setTicket($data);
-                $ticketMessage->setAuthor($data->getAuthor() ?? $data->getEmail() ?? 'Anonymous');
+                $ticketMessage = (new TicketMessage())
+                    ->setDescription($data->getDescription())
+                    ->setTicket($data)
+                    ->setAuthor($data->getAuthor() ?? $data->getEmail() ?? 'Anonymous');
                 $this->entityManager->persist($ticketMessage);
             }
             $this->entityManager->persist($data);

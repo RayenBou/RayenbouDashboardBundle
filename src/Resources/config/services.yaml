@@ -36,9 +36,6 @@ services:
     public: true
     autowire: true
     autoconfigure: true
-    # pour pouvoir injecter les service de l'abstract controller et utiliser ses methode
-    # il ne faut pas preciser d'argument a la methode setContainer pour laisser l'injection de dependance
-    # se faire automatiquement. il faut juste preciser un tableau vide
     calls:
       - method: setContainer
         arguments: [""]
