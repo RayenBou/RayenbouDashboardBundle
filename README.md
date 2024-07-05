@@ -71,10 +71,11 @@ And then you can :
     ```bash
     openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
     ```
+> [!IMPORTANT]
+> Remember to replace the passphrase with your clear text passphrase in the configuration.
 
-    Remember to replace the passphrase with your clear text passphrase in the configuration.
 
-5. **Database Setup**
+6. **Database Setup**
 
     If your project does not have a database configured yet, you can create it and update the schema with the following commands:
 
